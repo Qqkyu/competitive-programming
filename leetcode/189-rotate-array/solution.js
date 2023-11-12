@@ -16,13 +16,6 @@ var rotate = function(nums, k) {
       swap(nums, j, moduloJ);
     }
   }
-
-  if (k !== nums.length / k) {
-    for (let i = nums.length % k; i > 0; ++i) {
-      const idx = i + ((subArrays * k) % nums.length) - 1; 
-      swap(nums, idx, idx + 1);
-    }
-  }
 };
 
 function swap(arr, idxA, idxB) {
