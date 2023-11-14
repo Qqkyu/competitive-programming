@@ -6,33 +6,20 @@
 var minSubArrayLen = function (target, nums) {
   let i = 0,
     j = 0;
-  let curSubarraySum = nums[i];
-  let curMinLen = null;
-  while (i < nums.length) {
-    while (j < nums.length - 1 && curSubarraySum < target) {
-      ++j;
-      curSubarraySum += nums[j];
-    }
+  let curSubarraySum = 0;
+  let curMinLen = 0;
 
-    if (curSubarraySum < target) {
-      break;
-    }
+  while (j < nums.length) {
+    curSubarraySum += nums[j];
 
-    while (curSubarraySum - nums[i] >= target) {
+    while (curSubarraySum >= target) {
+      if (curMinLen === 0 || j - i + 1 < curMinLen) curMinLen = j - i + 1;
       curSubarraySum -= nums[i];
       ++i;
     }
 
-    if (curMinLen == null || j - i + 1 < curMinLen) {
-      curMinLen = j - i + 1;
-    }
-
-    curSubarraySum = curSubarraySum - nums[i];
-    i++;
-    if (i > j) {
-      j = i;
-    }
+    ++j;
   }
 
-  return curMinLen ?? 0;
+  return curMinLen;
 };
