@@ -2,31 +2,35 @@
  * @param {string} s
  * @return {boolean}
  */
-var isPalindrome = function(s) {
-  s = s.toLowerCase();
-  let [i, j] = [0, s.length - 1];
-  while (i <= j) {
-    const [a, b] = [s.charAt(i), s.charAt(j)];
-    if (!isAlphanumeric(a)) {
-      i++;
-      continue;
-    }
-    if (!isAlphanumeric(b)) {
-      j--;
-      continue;
-    }
+function isPalindrome(s) {
+  let i = 0;
+  let j = s.length - 1;
 
-    if (a === b) {
-      i++;
-      j--;
+  while (i < j) {
+    const a = s.charAt(i);
+    const b = s.charAt(j);
+
+    if (!isAlphaNumeric(a)) {
+      ++i;
+    } else if (!isAlphaNumeric(b)) {
+      --j;
     } else {
-      return false;
+      if (a.toLowerCase() !== b.toLowerCase()) {
+        return false;
+      }
+      ++i;
+      --j;
     }
   }
-  return true;
-};
 
-function isAlphanumeric(char) {
-  return char.match(/[a-z|A-Z|0-9]/i);
+  return true;
 }
 
+function isAlphaNumeric(char) {
+  const charCode = char.charCodeAt(0);
+  return (
+    (charCode > 47 && charCode < 58) ||
+    (charCode > 64 && charCode < 91) ||
+    (charCode > 96 && charCode < 123)
+  );
+}
