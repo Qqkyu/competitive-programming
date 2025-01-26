@@ -5,10 +5,9 @@ function backspaceCompare(s, t) {
   let j = t.length - 1;
   let tToRemove = 0;
 
-  // todo: and or or?
   while (i >= 0 || j >= 0) {
     const sChar = s[i];
-    const tChar = t[i];
+    const tChar = t[j];
 
     if (sToRemove === 0 && tToRemove === 0 && sChar !== "#" && tChar !== "#") {
       if (sChar !== tChar) {
@@ -35,4 +34,6 @@ function backspaceCompare(s, t) {
       }
     }
   }
+
+  return true;
 }
