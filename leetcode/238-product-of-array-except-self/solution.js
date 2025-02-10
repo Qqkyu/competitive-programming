@@ -1,18 +1,13 @@
-/**
- * @param {number[]} nums
- * @return {number[]}
- */
-var productExceptSelf = function (nums) {
-  const output = new Array(nums.length);
-  output[nums.length - 1] = nums[nums.length - 1];
-  for (let i = output.length - 2; i >= 0; --i) {
-    output[i] = nums[i] * output[i + 1];
+function productExceptSelf(nums) {
+  const result = new Array(nums.length);
+  for (let i = nums.length - 1; i >= 0; --i) {
+    result[i] = nums[i] * (result[i + 1] ?? 1);
   }
+
+  let curProduct = 1;
   for (let i = 0; i < nums.length; ++i) {
-    const leftProduct = nums[i - 1] ?? 1;
-    const rightProduct = output[i + 1] ?? 1;
-    nums[i] *= leftProduct;
-    output[i] = leftProduct * rightProduct;
+    result[i] = curProduct * (result[i + 1] ?? 1);
+    curProduct *= nums[i];
   }
-  return output;
-};
+  return result;
+}
