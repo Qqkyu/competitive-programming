@@ -2,18 +2,19 @@
  * @param {number[]} nums
  * @return {boolean}
  */
-var canJump = function(nums) {
-  let curJumpNeeded = 1;
+function canJump(nums) {
+  let curPos = 0;
 
-  for (let i = nums.length - 2; i > 0; --i) {
-    const curPossibleJump = nums[i];
-
-    if (curPossibleJump < curJumpNeeded) {
-      curJumpNeeded++;
-    } else 
-      curJumpNeeded = 1;
+  while (nums[curPos] + curPos < nums.length - 1) {
+    if (nums[curPos] === 0) {
+      return false;
     }
+    let candidate = curPos + 1;
+    for (let i = curPos + 2; i <= curPos + nums[curPos]; ++i) {
+      candidate = nums[i] + i >= nums[candidate] + candidate ? i : candidate;
+    }
+    curPos = candidate;
+  }
 
-  return nums[0] >= curJumpNeeded || nums.length === 1;
-};
-
+  return true;
+}
