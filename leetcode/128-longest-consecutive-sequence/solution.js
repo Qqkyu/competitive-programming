@@ -2,32 +2,20 @@
  * @param {number[]} nums
  * @return {number}
  */
-var longestConsecutive = function (nums) {
-  let longestConsecutiveSeq = 0;
-  const startToEnd = new Map();
-  const endToStart = new Map();
+function longestConsecutive(nums) {
+  const numsSet = new Set(nums);
+  let curLongestSeq = 0;
 
-  for (let i = 0; i < nums.length; ++i) {
-    const num = nums[i];
-    if (startToEnd.has(num) || endToStart.has(num)) continue;
+  for (let curNum of numsSet) {
+    if (numsSet.has(curNum - 1)) continue;
 
-    const leftSequenceStart = endToStart.get(num - 1) ?? num;
-    const leftSequenceEnd = startToEnd.get(leftSequenceStart);
-
-    const rightSequenceEnd = startToEnd.get(num + 1) ?? num;
-    const rightSequenceStart = endToStart.get(rightSequenceEnd);
-
-    startToEnd.set(leftSequenceStart, rightSequenceEnd);
-    startToEnd.delete(rightSequenceStart);
-
-    endToStart.set(rightSequenceEnd, leftSequenceStart);
-    endToStart.delete(leftSequenceEnd);
-
-    const sequenceLength = rightSequenceEnd - leftSequenceStart + 1;
-    if (sequenceLength > longestConsecutiveSeq) {
-      longestConsecutiveSeq = sequenceLength;
+    let curSeq = 1;
+    while (numsSet.has(curNum + curSeq)) {
+      ++curSeq;
     }
+
+    curLongestSeq = Math.max(curLongestSeq, curSeq);
   }
 
-  return longestConsecutiveSeq;
-};
+  return curLongestSeq;
+}
