@@ -5,11 +5,12 @@
 var groupAnagrams = function (strs) {
   const anagrams = {};
   strs.forEach((str) => {
-    const charCounts = new Array(26).fill(0);
+    const charCount = new Array(26).fill(0);
     for (let i = 0; i < str.length; ++i) {
-      charCounts[str.charCodeAt(i) - 97]++;
+      charCount[str.charCodeAt(i) - 97]++;
     }
-    const anagramHash = charCounts.join("#");
+
+    const anagramHash = charCount.join("#");
     if (anagrams[anagramHash]) {
       anagrams[anagramHash].push(str);
     } else {
