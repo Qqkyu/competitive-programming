@@ -22,20 +22,20 @@ TimeMap.prototype.set = function (key, value, timestamp) {
  * @return {string}
  */
 TimeMap.prototype.get = function (key, timestamp) {
-  const keyEntry = this.map.get(key);
+  const keyEntry = this.map.get(key) ?? [];
 
   let result = null;
   let left = 0,
     right = keyEntry.length - 1;
   while (left <= right) {
     const m = left + Math.floor((right - left) / 2);
-    const { timestamp: timestampPrev, value } = keyEntry[m].timestamp;
+    const { timestamp: timestampPrev, value } = keyEntry[m];
 
     if (timestamp > timestampPrev) {
       result = keyEntry[m];
-      left = m - 1;
+      left = m + 1;
     } else if (timestamp < timestampPrev) {
-      right = m + 1;
+      right = m - 1;
     } else {
       return value;
     }
