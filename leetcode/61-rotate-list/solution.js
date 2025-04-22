@@ -10,35 +10,31 @@
  * @param {number} k
  * @return {ListNode}
  */
-var rotateRight = function (head, k) {
-  if (head == null) {
-    return null;
-  }
-
-  let listTail = head;
-  for (let i = 0; i < k; ++i) {
-    if (listTail.next == null) {
-      k %= i + 1;
-      i = -1;
-      listTail = head;
-    } else {
-      listTail = listTail.next;
+function rotateRight(head, k) {
+  let listLen = 0,
+    tail = null;
+  for (let ptr = head; ptr != null; ptr = ptr.next) {
+    ++listLen;
+    if (ptr.next == null) {
+      tail = ptr;
     }
   }
 
-  if (k == 0) {
+  const rotations = k % listLen;
+
+  if (listLen === 0 || rotations === 0) {
     return head;
   }
 
-  let rotatedListTail = head;
-  while (listTail.next != null) {
-    listTail = listTail.next;
-    rotatedListTail = rotatedListTail.next;
+  let newTail = head;
+  for (let i = 0; i < listLen - rotations - 1; ++i) {
+    newTail = newTail.next;
   }
 
-  const newHead = rotatedListTail.next;
-  rotatedListTail.next = null;
-  listTail.next = head;
+  tail.next = head;
+
+  const newHead = newTail.next;
+  newTail.next = null;
 
   return newHead;
-};
+}
