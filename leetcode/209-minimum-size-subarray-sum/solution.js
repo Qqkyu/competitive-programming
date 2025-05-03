@@ -3,23 +3,22 @@
  * @param {number[]} nums
  * @return {number}
  */
-var minSubArrayLen = function (target, nums) {
-  let i = 0,
-    j = 0;
-  let curSubarraySum = 0;
-  let curMinLen = 0;
+function minSubArrayLen(target, nums) {
+  let result = Infinity;
+  let left = 0,
+    right = 0,
+    sum = nums[0];
 
-  while (j < nums.length) {
-    curSubarraySum += nums[j];
-
-    while (curSubarraySum >= target) {
-      if (curMinLen === 0 || j - i + 1 < curMinLen) curMinLen = j - i + 1;
-      curSubarraySum -= nums[i];
-      ++i;
+  while (right < nums.length) {
+    if (sum < target) {
+      ++right;
+      sum += nums[right] ?? 0;
+    } else {
+      result = Math.min(result, right - left + 1);
+      sum -= nums[left];
+      ++left;
     }
-
-    ++j;
   }
 
-  return curMinLen;
-};
+  return result === Infinity ? 0 : result;
+}
